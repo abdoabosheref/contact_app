@@ -10,16 +10,17 @@ import '../../../widgets/user_profile.dart';
 class AddNewContact extends StatefulWidget {
   List<Widget> list ;
   VoidCallback onTap ;
-   AddNewContact({super.key,required this.list,required this.onTap});
+  TextEditingController nameControl ;
+  TextEditingController emailControl ;
+  TextEditingController numberControl ;
+   AddNewContact({super.key,required this.list,required this.onTap,required this.numberControl,
+   required this.emailControl,required this.nameControl});
 
   @override
   State<AddNewContact> createState() => _AddNewContactState();
 }
 
 class _AddNewContactState extends State<AddNewContact> {
-  final TextEditingController nameControl =TextEditingController();
-  final TextEditingController emailControl =TextEditingController();
-  final TextEditingController numberControl =TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +102,9 @@ class _AddNewContactState extends State<AddNewContact> {
                       spacing: 9,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        TextFormInput(fieldName: "Enter User Name",textEditControl: nameControl,),
-                        TextFormInput(fieldName: "Enter User E-mail",textEditControl: emailControl,),
-                        TextFormInput(fieldName: "Enter User Number",textEditControl: numberControl,),
+                        TextFormInput(fieldName: "Enter User Name",textEditControl: widget.nameControl,),
+                        TextFormInput(fieldName: "Enter User E-mail",textEditControl: widget.emailControl,),
+                        TextFormInput(fieldName: "Enter User Number",textEditControl: widget.numberControl,),
                         SizedBox(
                           height: 60,
                           child: ElevatedButton(

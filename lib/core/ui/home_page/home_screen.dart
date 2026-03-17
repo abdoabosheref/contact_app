@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       )
-                    : AddNewContact(
+                    : AddNewContact(emailControl: emailControl,
+                  nameControl: nameControl,
+                  numberControl: numberControl,
                         list: contactList,
                         onTap: () {
                           setState(() {
