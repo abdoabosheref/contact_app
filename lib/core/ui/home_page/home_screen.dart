@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final TextEditingController nameControl = TextEditingController();
   final TextEditingController emailControl = TextEditingController();
   final TextEditingController numberControl = TextEditingController();
@@ -53,27 +52,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       )
-                    : AddNewContact(emailControl: emailControl,
-                  nameControl: nameControl,
-                  numberControl: numberControl,
+                    : AddNewContact(
+                        emailControl: emailControl,
+                        nameControl: nameControl,
+                        numberControl: numberControl,
                         list: contactList,
                         onTap: () {
-                      if(formState.currentState!.validate()){
-                        setState(() {
-                          contactList.add(
-                            UserProfile(index: contactList.length,
-                              profileName: nameControl.text,
-                              profileEmail: emailControl.text,
-                              profileNumber: numberControl.text,
-                            ),
-                          );
-                          nameControl.clear();
-                          emailControl.clear();
-                          numberControl.clear();
-                          Navigator.pop(context);
-                        });
-                      }
-
+                          if (formState.currentState!.validate()) {
+                            setState(() {
+                              contactList.add(
+                                UserProfile(
+                                  index: contactList.length,
+                                  profileName: nameControl.text,
+                                  profileEmail: emailControl.text,
+                                  profileNumber: numberControl.text,
+                                ),
+                              );
+                              nameControl.clear();
+                              emailControl.clear();
+                              numberControl.clear();
+                              Navigator.pop(context);
+                            });
+                          }
                         },
                       ),
               ),

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import '../utilites/color_model.dart';
 
 class TextFormInput extends StatelessWidget {
-
   TextInputType keyBoardType;
-  String? Function(String?)? validator ;
+  String? Function(String?)? validator;
   String fieldName;
 
   TextEditingController textEditControl;
@@ -12,8 +11,7 @@ class TextFormInput extends StatelessWidget {
     required this.fieldName,
     required this.textEditControl,
     required this.keyBoardType,
-    this.validator
-
+    this.validator,
   });
 
   @override
@@ -24,17 +22,20 @@ class TextFormInput extends StatelessWidget {
       style: TextStyle(color: AppColor.white),
       controller: textEditControl,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16),),
+        border: builtOutLineInputBorder(),
         hintText: fieldName,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColor.white),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColor.white),
-        ),
+        focusedBorder: builtOutLineInputBorder(),
+        enabledBorder: builtOutLineInputBorder(),
         hintStyle: TextStyle(color: AppColor.white),
-        errorStyle: TextStyle(color: AppColor.white,fontSize: 15)
+        errorStyle: TextStyle(color: AppColor.white, fontSize: 15),
       ),
+    );
+  }
+
+  OutlineInputBorder builtOutLineInputBorder() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: BorderSide(color: AppColor.white),
     );
   }
 }
