@@ -1,3 +1,4 @@
+import 'package:contact_app/core/utilites/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -8,37 +9,48 @@ import '../../../widgets/text_widget.dart';
 import '../../../widgets/user_profile.dart';
 
 class AddNewContact extends StatefulWidget {
-  List<Widget> list ;
-  VoidCallback onTap ;
-  TextEditingController nameControl ;
-  TextEditingController emailControl ;
-  TextEditingController numberControl ;
-   AddNewContact({super.key,required this.list,required this.onTap,required this.numberControl,
-   required this.emailControl,required this.nameControl});
+  List<Widget> list;
+  VoidCallback onTap;
+  TextEditingController nameControl;
+  TextEditingController emailControl;
+  TextEditingController numberControl;
+  AddNewContact({
+    super.key,
+    required this.list,
+    required this.onTap,
+    required this.numberControl,
+    required this.emailControl,
+    required this.nameControl,
+  });
 
   @override
   State<AddNewContact> createState() => _AddNewContactState();
 }
+
+GlobalKey<FormState> formState = GlobalKey();
 
 class _AddNewContactState extends State<AddNewContact> {
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => showModalBottomSheet(isScrollControlled: true,
+      onPressed: () => showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
             child: Container(
-              height: 460,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: AppColor.darkBlue,
               ),
               child: Padding(
-                padding:  EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
+                  mainAxisSize: .min,
                   spacing: 16,
                   children: [
                     Row(
@@ -49,13 +61,17 @@ class _AddNewContactState extends State<AddNewContact> {
                           height: 146,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            border:BoxBorder.all(strokeAlign:1,color:AppColor.white),
+                            border: BoxBorder.all(
+                              width: 2,
+                              color: AppColor.white,
+                            ),
                           ),
-                          child: IconButton(onPressed: (){},
-                            icon:  ListView(
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: ListView(
                               children: [Lottie.asset(AppAnime.addImage)],
-                            ),),
-
+                            ),
+                          ),
                         ),
 
                         Column(
@@ -98,33 +114,51 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                       ],
                     ),
-                    Column(
-                      spacing: 9,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextFormInput(fieldName: "Enter User Name",textEditControl: widget.nameControl,),
-                        TextFormInput(fieldName: "Enter User E-mail",textEditControl: widget.emailControl,),
-                        TextFormInput(fieldName: "Enter User Number",textEditControl: widget.numberControl,),
-                        SizedBox(
-                          height: 60,
-                          child: ElevatedButton(
-                            onPressed: widget.onTap,
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadiusGeometry.all(
-                                  Radius.circular(16),
+                    Form(
+                      key: formState,
+                      child: Column(
+                        spacing: 9,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TextFormInput(
+                            validator: (value) =>validate.nameValidation(value),
+                            fieldName: "Enter User Name",
+                            textEditControl: widget.nameControl,
+                            keyBoardType: TextInputType.name,
+
+                          ),
+                          TextFormInput(
+                            validator: (value)=>validate.emailValidation(value) ,
+                            fieldName: "Enter User E-mail",
+                            textEditControl: widget.emailControl,
+                            keyBoardType: TextInputType.emailAddress,
+                          ),
+                          TextFormInput(validator: (value) => validate.phoneValidation(value),
+                            fieldName: "Enter User Number",
+                            textEditControl: widget.numberControl,
+                            keyBoardType: TextInputType.number,
+                          ),
+                          SizedBox(
+                            height: 60,
+                            child: ElevatedButton(
+                              onPressed: widget.onTap,
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusGeometry.all(
+                                    Radius.circular(16),
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: TextWidget(
-                              textName: 'Enter User',
-                              fontWight: FontWeight.w300,
-                              fontSize: 20,
-                              textColor: AppColor.darkBlue,
+                              child: TextWidget(
+                                textName: 'Enter User',
+                                fontWight: FontWeight.w300,
+                                fontSize: 20,
+                                textColor: AppColor.darkBlue,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
