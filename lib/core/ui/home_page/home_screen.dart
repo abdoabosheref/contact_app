@@ -13,20 +13,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final TextEditingController nameControl = TextEditingController();
   final TextEditingController emailControl = TextEditingController();
   final TextEditingController numberControl = TextEditingController();
 
   late List<Widget> contactList = [];
+  @override
+  void dispose() {
+    nameControl.dispose();
+    emailControl.dispose();
+    numberControl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Stack(
           children: [
             contactList.isEmpty
                 ? AnimationEmptyWidget()
@@ -46,24 +52,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                       )
-                    : AddNewContact(emailControl: emailControl,
-                  nameControl: nameControl,
-                  numberControl: numberControl,
+                    : AddNewContact(
+                        emailControl: emailControl,
+                        nameControl: nameControl,
+                        numberControl: numberControl,
                         list: contactList,
                         onTap: () {
-                          setState(() {
-                            contactList.add(
-                              UserProfile(
-                                profileName: nameControl.text,
-                                profileEmail: emailControl.text,
-                                profileNumber: numberControl.text,
-                              ),
-                            );
-                            nameControl.clear();
-                            emailControl.clear();
-                            numberControl.clear();
-                            Navigator.pop(context);
-                          });
+                          if (formState.currentState!.validate()) {
+                            setState(() {
+                              contactList.add(
+                                UserProfile(
+                                  index: contactList.length,
+                                  profileName: nameControl.text,
+                                  profileEmail: emailControl.text,
+                                  profileNumber: numberControl.text,
+                                ),
+                              );
+                              nameControl.clear();
+                              emailControl.clear();
+                              numberControl.clear();
+                              Navigator.pop(context);
+                            });
+                          }
                         },
                       ),
               ),
