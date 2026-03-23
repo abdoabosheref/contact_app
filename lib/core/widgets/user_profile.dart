@@ -5,19 +5,21 @@ import 'package:flutter_svg/svg.dart';
 import '../utilites/assets.dart';
 import '../utilites/color_model.dart';
 
-class UserProfile extends StatefulWidget {
-  String profileName;
-  String profileEmail;
-  String profileNumber;
+class UserProfile extends StatefulWidget  {
+  String? profileName ;
+  String? profileEmail;
+  String? profileNumber;
   String? profileImage;
   int ? index ;
+  VoidCallback ? onTap ;
 
   UserProfile({
-    required this.profileName,
-    required this.profileEmail,
-    required this.profileNumber,
+    this.profileName ,
+    this.profileEmail,
+    this.profileNumber,
     this.profileImage,
-    this.index
+    this.index,
+    this.onTap
   });
 
   @override
@@ -52,7 +54,7 @@ class _UserProfileState extends State<UserProfile> {
                           textColor: AppColor.darkBlue,
                           fontSize: 10,
                           fontWight: FontWeight.w500,
-                          textName: widget.profileEmail,
+                          textName: widget.profileEmail ?? 'no email',
                         ),
                       ],
                     ),
@@ -64,14 +66,12 @@ class _UserProfileState extends State<UserProfile> {
                           textColor: AppColor.darkBlue,
                           fontSize: 10,
                           fontWight: FontWeight.w500,
-                          textName: widget.profileNumber,
+                          textName: widget.profileNumber ?? 'no number',
                         ),
                       ],
                     ),
-                    ElevatedButton(
-                      onPressed: () {
+                    ElevatedButton(onPressed: widget.onTap,
 
-                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.red,
                         shape: RoundedRectangleBorder(
@@ -113,7 +113,7 @@ class _UserProfileState extends State<UserProfile> {
                     textColor: AppColor.darkBlue,
                     fontSize: 14,
                     fontWight: FontWeight.w500,
-                    textName: widget.profileName,
+                    textName: widget.profileName ?? 'no name',
                   ),
                 ),
               ),
