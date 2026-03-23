@@ -36,14 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             contactList.isEmpty
                 ? AnimationEmptyWidget()
-                : CustomeGridView(list: contactList),
+                : CustomeGridView(list: contactList,
+              ),
 
             // AnimationEmptyWidget(),
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
-                padding: const EdgeInsets.only(right: 16, bottom: 16),
-                child: contactList.length == 6
+                padding:  EdgeInsets.only(right: 16, bottom: 16),
+                child: contactList.length <= 6
                     ? DeleteLastItemFloatButton(
                         list: contactList,
                         onTap: () {
@@ -57,24 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         nameControl: nameControl,
                         numberControl: numberControl,
                         list: contactList,
-                        onTap: () {
-                          if (formState.currentState!.validate()) {
-                            setState(() {
-                              contactList.add(
-                                UserProfile(
-                                  index: contactList.length,
-                                  profileName: nameControl.text,
-                                  profileEmail: emailControl.text,
-                                  profileNumber: numberControl.text,
-                                ),
-                              );
-                              nameControl.clear();
-                              emailControl.clear();
-                              numberControl.clear();
-                              Navigator.pop(context);
-                            });
-                          }
-                        },
+                  onTap: () {
+                    validationReturnUserProfile ();
+                  },
                       ),
               ),
             ),
@@ -82,5 +68,27 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+  void validationReturnUserProfile (){
+    if (formState.currentState!.validate()) {
+      setState(() {
+        late UserProfile newContact;
+        newContact = UserProfile(
+          profileName: nameControl.text,
+          profileEmail: emailControl.text,
+          profileNumber: numberControl.text,
+          onTap: () {
+            setState(() {
+              contactList.remove(newContact);
+            });
+          },
+        );
+        contactList.add(newContact);
+        nameControl.clear();
+        emailControl.clear();
+        numberControl.clear();
+        Navigator.pop(context);
+      });
+    }
   }
 }
