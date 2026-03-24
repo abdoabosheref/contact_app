@@ -35,7 +35,7 @@ class TextFormInput extends StatelessWidget {
   OutlineInputBorder builtOutLineInputBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
-      borderSide: BorderSide(color: AppColor.white),
+      borderSide: BorderSide(color: AppColor.white,width: 2),
     );
   }
 }
