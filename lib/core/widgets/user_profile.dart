@@ -1,10 +1,7 @@
 import 'dart:io';
-
-import 'package:contact_app/core/utilites/image_pick.dart';
 import 'package:contact_app/core/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../utilites/assets.dart';
 import '../utilites/color_model.dart';
 
@@ -51,7 +48,7 @@ class _UserProfileState extends State<UserProfile> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                   child: widget.pickedImage.value != null
-                      ? Image.file(widget.pickedImage.value!, fit: BoxFit.contain)
+                      ? Image.file(widget.pickedImage.value!, fit: BoxFit.cover)
                       : Image.asset('empty', fit: BoxFit.cover), // صورة افتراضية
                 ),
               ),              Padding(

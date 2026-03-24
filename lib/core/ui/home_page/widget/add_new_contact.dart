@@ -1,15 +1,12 @@
 import 'dart:io';
-
 import 'package:contact_app/core/utilites/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../../utilites/assets.dart';
 import '../../../utilites/color_model.dart';
 import '../../../utilites/image_pick.dart';
 import '../../../widgets/text_form_input.dart';
 import '../../../widgets/text_widget.dart';
-import '../../../widgets/user_profile.dart';
 
 class AddNewContact extends StatelessWidget {
   List<Widget> list;
@@ -71,14 +68,14 @@ class AddNewContact extends StatelessWidget {
 
                             },
                             icon: ValueListenableBuilder(valueListenable: pickedImage,
-                                builder: (context, image, child) {
-                                  if(image != null ) {
-                                    return Image.file(
-                                      image, fit: BoxFit.cover,);
-                                  }else{
+                              builder: (context, image, child) {
+                                if(image != null ) {
+                                  return Image.file(
+                                    image, fit: BoxFit.cover,);
+                                }else{
                                   return LottieBuilder.asset(AppAnime.addImage);
-                                  }
-                                },),
+                                }
+                              },),
                           ),
                         ),
 
@@ -86,38 +83,51 @@ class AddNewContact extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           spacing: 16,
                           children: [
-                            TextWidget(
-                              textColor: AppColor.white,
-                              fontSize: 20,
-                              fontWight: FontWeight.w500,
-                              textName: 'user name',
-                            ),
-
+                            // ValueListenableBuilder(
+                            //     valueListenable: nameControl,
+                            //     builder: (context, name, child) {
+                            //       return TextWidget(
+                            //         textColor: AppColor.white,
+                            //         fontSize: 20,
+                            //         fontWight: FontWeight.w500,
+                            //         textName: name.text.isEmpty ? "user name" : name.text,
+                            //       );
+                            //     },),
+                            // Container(
+                            //   width: 210,
+                            //   height: 1,
+                            //   color: Colors.white,
+                            // ),
+                            // TextWidget(
+                            //   textColor: AppColor.white,
+                            //   fontSize: 20,
+                            //   fontWight: FontWeight.w500,
+                            //   textName: "example@email.com",
+                            // ),
+                            // Container(
+                            //   width: 210,
+                            //   height: 1,
+                            //   color: Colors.white,
+                            // ),
+                            // TextWidget(
+                            //   textColor: AppColor.white,
+                            //   fontSize: 20,
+                            //   fontWight: FontWeight.w500,
+                            //   textName: "+200000000000",
+                            // ),
+                            vLB(controller: nameControl,text:'user name' ),
                             Container(
                               width: 210,
                               height: 1,
                               color: Colors.white,
                             ),
-
-                            TextWidget(
-                              textColor: AppColor.white,
-                              fontSize: 20,
-                              fontWight: FontWeight.w500,
-                              textName: "example@email.com",
-                            ),
-
+                            vLB(controller: emailControl,text:'example@gmail.com' ),
                             Container(
                               width: 210,
                               height: 1,
                               color: Colors.white,
                             ),
-
-                            TextWidget(
-                              textColor: AppColor.white,
-                              fontSize: 20,
-                              fontWight: FontWeight.w500,
-                              textName: "+200000000000",
-                            ),
+                            vLB(controller: numberControl,text:'01000000000' ),
                           ],
                         ),
                       ],
@@ -177,6 +187,18 @@ class AddNewContact extends StatelessWidget {
       ),
       child: Icon(Icons.add, color: AppColor.darkBlue),
     );
+  }
+  ValueListenableBuilder<TextEditingValue> vLB ({ controller, text}){
+    return ValueListenableBuilder(
+      valueListenable: controller,
+      builder: (context, value, child) {
+        return TextWidget(
+          textColor: AppColor.white,
+          fontSize: 20,
+          fontWight: FontWeight.w500,
+          textName: value.text.isEmpty ? text : value.text,
+        );
+      },);
   }
 }
 
