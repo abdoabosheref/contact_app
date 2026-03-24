@@ -1,16 +1,16 @@
-# contact_app
+This project was a great opportunity to apply what I’ve learned in a practical way. Here are some of the key features and concepts I worked on:
 
-A new Flutter project.
+✨ Add New User
+✨ Delete User
+✨ Splash Screen
+✨ Custom Widgets
+✨ Custom Callback Functions
+✨ State Management using Value Notifier
+✨ Image Picker Integration
+✨ Animations for better user experience
+✨ Bottom Modal Sheet
+✨ Floating action button 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+https://github.com/user-attachments/assets/a51a557c-0472-4180-b790-7fa05972c541
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
