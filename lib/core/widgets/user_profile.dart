@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:contact_app/core/utilites/image_pick.dart';
 import 'package:contact_app/core/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,17 +12,19 @@ class UserProfile extends StatefulWidget  {
   String? profileName ;
   String? profileEmail;
   String? profileNumber;
-  String? profileImage;
+  final ValueNotifier<File?> pickedImage ;
   int ? index ;
   VoidCallback ? onTap ;
+
 
   UserProfile({
     this.profileName ,
     this.profileEmail,
     this.profileNumber,
-    this.profileImage,
     this.index,
-    this.onTap
+    this.onTap,
+    required this.pickedImage ,
+
   });
 
   @override
@@ -40,8 +45,16 @@ class _UserProfileState extends State<UserProfile> {
           Column(
             mainAxisSize: .min,
             children: [
-              Image.asset(AppImages.profileImage),
-              Padding(
+              SizedBox(
+                height: 180,
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  child: widget.pickedImage.value != null
+                      ? Image.file(widget.pickedImage.value!, fit: BoxFit.contain)
+                      : Image.asset('empty', fit: BoxFit.cover), // صورة افتراضية
+                ),
+              ),              Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
                   spacing: 4.5,

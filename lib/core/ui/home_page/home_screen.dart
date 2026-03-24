@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:contact_app/core/ui/home_page/widget/add_new_contact.dart';
 import 'package:contact_app/core/ui/home_page/widget/custome_grid_view.dart';
 import 'package:contact_app/core/ui/home_page/widget/delete_last_item_float_button.dart';
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ValueNotifier<File?> pickedImage = ValueNotifier(null);
   final TextEditingController nameControl = TextEditingController();
   final TextEditingController emailControl = TextEditingController();
   final TextEditingController numberControl = TextEditingController();
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding:  EdgeInsets.only(right: 16, bottom: 16),
-                child: contactList.length <= 6
+                child: contactList.length >= 6
                     ? DeleteLastItemFloatButton(
                         list: contactList,
                         onTap: () {
@@ -54,12 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       )
                     : AddNewContact(
+                        pickedImage: pickedImage,
                         emailControl: emailControl,
                         nameControl: nameControl,
                         numberControl: numberControl,
                         list: contactList,
                   onTap: () {
-                    validationReturnUserProfile ();
+                    validationReturnUserProfile ( );
                   },
                       ),
               ),
@@ -74,9 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         late UserProfile newContact;
         newContact = UserProfile(
+          pickedImage: ValueNotifier<File?>(pickedImage.value),
           profileName: nameControl.text,
           profileEmail: emailControl.text,
           profileNumber: numberControl.text,
+
           onTap: () {
             setState(() {
               contactList.remove(newContact);
@@ -87,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
         nameControl.clear();
         emailControl.clear();
         numberControl.clear();
+        pickedImage.value = null;
         Navigator.pop(context);
       });
     }
