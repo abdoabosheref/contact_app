@@ -1,19 +1,24 @@
+import 'dart:io';
+
 import 'package:contact_app/core/utilites/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../utilites/assets.dart';
 import '../../../utilites/color_model.dart';
+import '../../../utilites/image_pick.dart';
 import '../../../widgets/text_form_input.dart';
 import '../../../widgets/text_widget.dart';
 import '../../../widgets/user_profile.dart';
 
-class AddNewContact extends StatefulWidget {
+class AddNewContact extends StatelessWidget {
   List<Widget> list;
   VoidCallback onTap;
   TextEditingController nameControl;
   TextEditingController emailControl;
   TextEditingController numberControl;
+  final ValueNotifier<File?> pickedImage ;
+
   AddNewContact({
     super.key,
     required this.list,
@@ -21,15 +26,8 @@ class AddNewContact extends StatefulWidget {
     required this.numberControl,
     required this.emailControl,
     required this.nameControl,
+    required this.pickedImage
   });
-
-  @override
-  State<AddNewContact> createState() => _AddNewContactState();
-}
-
-GlobalKey<FormState> formState = GlobalKey();
-
-class _AddNewContactState extends State<AddNewContact> {
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +65,20 @@ class _AddNewContactState extends State<AddNewContact> {
                             ),
                           ),
                           child: IconButton(
-                            onPressed: () {},
-                            icon: ListView(
-                              children: [Lottie.asset(AppAnime.addImage)],
-                            ),
+                            onPressed: () async {
+
+                             pickedImage.value = await pickImage();
+
+                            },
+                            icon: ValueListenableBuilder(valueListenable: pickedImage,
+                                builder: (context, image, child) {
+                                  if(image != null ) {
+                                    return Image.file(
+                                      image, fit: BoxFit.cover,);
+                                  }else{
+                                  return LottieBuilder.asset(AppAnime.addImage);
+                                  }
+                                },),
                           ),
                         ),
 
@@ -123,25 +131,25 @@ class _AddNewContactState extends State<AddNewContact> {
                           TextFormInput(
                             validator: (value) =>validate.nameValidation(value),
                             fieldName: "Enter User Name",
-                            textEditControl: widget.nameControl,
+                            textEditControl: nameControl,
                             keyBoardType: TextInputType.name,
 
                           ),
                           TextFormInput(
                             validator: (value)=>validate.emailValidation(value) ,
                             fieldName: "Enter User E-mail",
-                            textEditControl: widget.emailControl,
+                            textEditControl: emailControl,
                             keyBoardType: TextInputType.emailAddress,
                           ),
                           TextFormInput(validator: (value) => validate.phoneValidation(value),
                             fieldName: "Enter User Number",
-                            textEditControl: widget.numberControl,
+                            textEditControl: numberControl,
                             keyBoardType: TextInputType.number,
                           ),
                           SizedBox(
                             height: 60,
                             child: ElevatedButton(
-                              onPressed: widget.onTap,
+                              onPressed: onTap,
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadiusGeometry.all(
@@ -171,3 +179,5 @@ class _AddNewContactState extends State<AddNewContact> {
     );
   }
 }
+
+GlobalKey<FormState> formState = GlobalKey();
